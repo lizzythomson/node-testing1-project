@@ -6,13 +6,13 @@ describe('[Exercise 1] trimProperties', () => {
     const input = { foo: '  foo ', bar: 'bar ', baz: ' baz' };
     const expected = { foo: 'foo', bar: 'bar', baz: 'baz' };
     const actual = utils.trimProperties(input);
-    expect(actual).toEqual(expected);
+    expect(actual).toMatchObject(expected);
   });
   test('[2] returns a copy, leaving the original object intact', () => {
     const input = { hello: 'hello', world: 'world' };
     const expected = { hello: 'hello', world: 'world' };
     const actual = utils.trimProperties(input);
-    expect(actual).toEqual(expected);
+    expect(actual).toMatchObject(expected);
     expect(actual).not.toBe(expected);
   });
 });
@@ -22,7 +22,7 @@ describe('[Exercise 2] trimPropertiesMutation', () => {
     const input = { foo: '  foo ', bar: 'bar ', baz: ' baz' };
     const expected = { foo: 'foo', bar: 'bar', baz: 'baz' };
     const actual = utils.trimPropertiesMutation(input);
-    expect(actual).toEqual(expected);
+    expect(actual).toMatchObject(expected);
   });
   test('[4] the object returned is the exact same one we passed in', () => {
     const input = { hello: 'hello', world: 'world' };
@@ -51,49 +51,96 @@ describe('[Exercise 4] Counter', () => {
   beforeEach(() => {
     counter = new utils.Counter(3); // each test must start with a fresh couter
   });
-  test('[6] the FIRST CALL of counter.countDown returns the initial count', () => {});
-  // test('[7] the SECOND CALL of counter.countDown returns the initial count minus one', () => {})
-  // test('[8] the count eventually reaches zero but does not go below zero', () => {})
+  test('[6] the FIRST CALL of counter.countDown returns the initial count', () => {
+    const actual = counter.countDown();
+    expect(actual).toBe(3);
+  });
+  test('[7] the SECOND CALL of counter.countDown returns the initial count minus one', () => {
+    counter.countDown();
+    const actual = counter.countDown();
+    expect(actual).toBe(2);
+  });
+  test('[8] the count eventually reaches zero but does not go below zero', () => {
+    counter.countDown();
+    counter.countDown();
+    counter.countDown();
+    counter.countDown();
+    const actual = counter.countDown();
+    expect(actual).toBe(0);
+  });
 });
 
-// describe('[Exercise 5] Seasons', () => {
-//   let seasons;
-//   beforeEach(() => {
-//     seasons = new utils.Seasons(); // each test must start with fresh seasons
-//   });
-//   // test('[9] the FIRST call of seasons.next returns "summer"', () => {})
-//   // test('[10] the SECOND call of seasons.next returns "fall"', () => {})
-//   // test('[11] the THIRD call of seasons.next returns "winter"', () => {})
-//   // test('[12] the FOURTH call of seasons.next returns "spring"', () => {})
-//   // test('[13] the FIFTH call of seasons.next returns again "summer"', () => {})
-//   // test('[14] the 40th call of seasons.next returns "spring"', () => {})
-// });
+describe('[Exercise 5] Seasons', () => {
+  let seasons;
+  beforeEach(() => {
+    seasons = new utils.Seasons(); // each test must start with fresh seasons
+  });
+  test('[9] the FIRST call of seasons.next returns "summer"', () => {
+    const returnedSeason = seasons.next();
+    expect(returnedSeason).toBe('summer');
+  });
+  test('[10] the SECOND call of seasons.next returns "fall"', () => {
+    seasons.next();
+    const returnedSeason = seasons.next();
+    expect(returnedSeason).toBe('fall');
+  });
+  test('[11] the THIRD call of seasons.next returns "winter"', () => {
+    seasons.next();
+    seasons.next();
+    const returnedSeason = seasons.next();
+    expect(returnedSeason).toBe('winter');
+  });
+  test('[12] the FOURTH call of seasons.next returns "spring"', () => {
+    seasons.next();
+    seasons.next();
+    seasons.next();
+    const returnedSeason = seasons.next();
+    expect(returnedSeason).toBe('spring');
+  });
+  test('[13] the FIFTH call of seasons.next returns again "summer"', () => {
+    seasons.next();
+    seasons.next();
+    seasons.next();
+    seasons.next();
+    const returnedSeason = seasons.next();
+    expect(returnedSeason).toBe('summer');
+  });
+  test('[14] the 40th call of seasons.next returns "spring"', () => {
+    const seasonCalled = (num) => {
+      for (let i = 0; i <= num; i++) {
+        seasons.next();
+      }
+    };
+    seasonCalled(39);
+    const returnedSeason = seasons.next();
+    expect(returnedSeason).toBe('summer');
+  });
+});
 
-// describe('[Exercise 6] Car', () => {
-//   let focus;
-//   beforeEach(() => {
-//     focus = new utils.Car('focus', 20, 30); // each test must start with a fresh car
-//   });
-//   // test('[15] driving the car returns the updated odometer', () => {
-//   // expect(focus.drive(10)).toBe(10)
-//   // expect(focus.drive(6)).toBe(16)
-//   // expect(focus.drive(4)).toBe(20)
-//   // test('[16] driving the car uses gas', () => {})
-//   // test('[17] refueling allows to keep driving', () => {})
-//   // test('[18] adding fuel to a full tank has no effect', () => {})
-// });
+describe('[Exercise 6] Car', () => {
+  let focus;
+  beforeEach(() => {
+    focus = new utils.Car('focus', 20, 30); // each test must start with a fresh car
+  });
+  test('[15] driving the car returns the updated odometer', () => {
+    expect(focus.drive(10)).toBe(10);
+    expect(focus.drive(6)).toBe(16);
+    expect(focus.drive(4)).toBe(20);
+  });
+  test('[16] driving the car uses gas', () => {});
+  //   // test('[17] refueling allows to keep driving', () => {})
+  //   // test('[18] adding fuel to a full tank has no effect', () => {})
+});
 
-// // describe('[Exercise 7] isEvenNumberAsync', async () => {
-// // test('[19] resolves true if passed an even number', () => {
-// // expect(await )
-// // })
-// // test('[20] resolves false if passed an odd number', () => {})
-// // });
-
-// // test('[21] driving a distance adds miles to the odometer', () => {
-// // expect(focus.odometer).toBe(0)
-// // focus.drive(15)
-// //   expect(focus.odometer).toBe(15)
-// //   focus.drive(4)
-// //   expect(focus.odometer).toBe(19)
-// // })
+describe('[Exercise 7] isEvenNumberAsync', () => {
+  test('[19] resolves true if passed an even number', async () => {
+    expect(await utils.isEvenNumberAsync(8)).toBe(true);
+    expect(await utils.isEvenNumberAsync(18)).toBe(true);
+    expect(await utils.isEvenNumberAsync(888)).toBe(true);
+  });
+  test('[20] resolves false if passed an odd number', async () => {
+    expect(await utils.isEvenNumberAsync(7)).toBe(false);
+    expect(await utils.isEvenNumberAsync(333)).toBe(false);
+    expect(await utils.isEvenNumberAsync(1234567)).toBe(false);
+  });
+});

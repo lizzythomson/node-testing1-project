@@ -59,7 +59,8 @@ class Counter {
    */
   constructor(initialNumber) {
     // ✨ initialize whatever properties are needed
-    counter: initialNumber;
+    this.counter = initialNumber;
+    this.calledOnce = false;
   }
 
   /**
@@ -75,7 +76,15 @@ class Counter {
    * counter.countDown() // returns 0
    */
   countDown() {
-    // ✨ implement
+    if (this.calledOnce === false) {
+      this.calledOnce = true;
+      return this.counter;
+    }
+    if (this.counter === 0) {
+      return this.counter;
+    } else {
+      return this.counter;
+    }
   }
 }
 
@@ -85,6 +94,7 @@ class Seasons {
    */
   constructor() {
     // ✨ initialize whatever properties are needed
+    this.season = 'spring';
   }
 
   /**
@@ -100,7 +110,19 @@ class Seasons {
    * seasons.next() // returns "summer"
    */
   next() {
-    // ✨ implement
+    if (this.season === 'spring') {
+      this.season = 'summer';
+      return this.season;
+    } else if (this.season === 'summer') {
+      this.season = 'fall';
+      return this.season;
+    } else if (this.season === 'fall') {
+      this.season = 'winter';
+      return this.season;
+    } else {
+      this.season = 'spring';
+      return this.season;
+    }
   }
 }
 
@@ -116,6 +138,7 @@ class Car {
     this.tank = tankSize; // car initiazes full of gas
     this.name = name; // ✨ initialize whatever other properties are needed
     this.mpg = mpg;
+    this.tankSize = tankSize; //tracks how much gas can be in the tank
   }
 
   /**
@@ -132,8 +155,9 @@ class Car {
    * focus.drive(200) // returns 600 (ran out of gas after 100 miles)
    */
   drive(distance) {
-    // ✨ implement
     this.odometer = this.odometer + distance;
+    this.tank = this.tank - this.distance * this.mpg;
+    return this.odometer;
   }
 
   /**
@@ -148,7 +172,7 @@ class Car {
    * focus.refuel(99) // returns 600 (tank only holds 20)
    */
   refuel(gallons) {
-    // ✨ implement
+    // if(this.tank)
   }
 }
 
@@ -166,7 +190,11 @@ class Car {
  * })
  */
 function isEvenNumberAsync(number) {
-  // ✨ implement
+  if (number % 2 === 0) {
+    return true;
+  } else {
+    return false;
+  }
 }
 
 module.exports = {
