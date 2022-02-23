@@ -83,6 +83,7 @@ class Counter {
     if (this.counter === 0) {
       return this.counter;
     } else {
+      this.counter -= 1;
       return this.counter;
     }
   }
@@ -155,9 +156,15 @@ class Car {
    * focus.drive(200) // returns 600 (ran out of gas after 100 miles)
    */
   drive(distance) {
-    this.odometer = this.odometer + distance;
-    this.tank = this.tank - this.distance * this.mpg;
-    return this.odometer;
+    if (this.tank * this.mpg >= distance) {
+      this.odometer += distance;
+      this.tank -= distance / this.mpg;
+      return this.odometer;
+    } else {
+      this.odometer += this.tank * this.mpg;
+      this.tank = 0;
+      return this.odometer;
+    }
   }
 
   /**
@@ -172,7 +179,14 @@ class Car {
    * focus.refuel(99) // returns 600 (tank only holds 20)
    */
   refuel(gallons) {
-    // if(this.tank)
+    if (this.tank + gallons >= this.tankSize) {
+      this.tank = this.tankSize;
+    } else {
+      this.tank += gallons;
+    }
+
+    const milesToBeDriven = this.tank * this.mpg;
+    return milesToBeDriven;
   }
 }
 

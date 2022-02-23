@@ -42,7 +42,7 @@ describe('[Exercise 3] findLargestInteger', () => {
     ];
     const expected = 8;
     const actual = utils.findLargestInteger(input);
-    expect(actual).toBe(expected);
+    expect(actual).toEqual(expected);
   });
 });
 
@@ -53,12 +53,12 @@ describe('[Exercise 4] Counter', () => {
   });
   test('[6] the FIRST CALL of counter.countDown returns the initial count', () => {
     const actual = counter.countDown();
-    expect(actual).toBe(3);
+    expect(actual).toEqual(3);
   });
   test('[7] the SECOND CALL of counter.countDown returns the initial count minus one', () => {
     counter.countDown();
     const actual = counter.countDown();
-    expect(actual).toBe(2);
+    expect(actual).toEqual(2);
   });
   test('[8] the count eventually reaches zero but does not go below zero', () => {
     counter.countDown();
@@ -66,7 +66,7 @@ describe('[Exercise 4] Counter', () => {
     counter.countDown();
     counter.countDown();
     const actual = counter.countDown();
-    expect(actual).toBe(0);
+    expect(actual).toEqual(0);
   });
 });
 
@@ -77,25 +77,25 @@ describe('[Exercise 5] Seasons', () => {
   });
   test('[9] the FIRST call of seasons.next returns "summer"', () => {
     const returnedSeason = seasons.next();
-    expect(returnedSeason).toBe('summer');
+    expect(returnedSeason).toEqual('summer');
   });
   test('[10] the SECOND call of seasons.next returns "fall"', () => {
     seasons.next();
     const returnedSeason = seasons.next();
-    expect(returnedSeason).toBe('fall');
+    expect(returnedSeason).toEqual('fall');
   });
   test('[11] the THIRD call of seasons.next returns "winter"', () => {
     seasons.next();
     seasons.next();
     const returnedSeason = seasons.next();
-    expect(returnedSeason).toBe('winter');
+    expect(returnedSeason).toEqual('winter');
   });
   test('[12] the FOURTH call of seasons.next returns "spring"', () => {
     seasons.next();
     seasons.next();
     seasons.next();
     const returnedSeason = seasons.next();
-    expect(returnedSeason).toBe('spring');
+    expect(returnedSeason).toEqual('spring');
   });
   test('[13] the FIFTH call of seasons.next returns again "summer"', () => {
     seasons.next();
@@ -103,7 +103,7 @@ describe('[Exercise 5] Seasons', () => {
     seasons.next();
     seasons.next();
     const returnedSeason = seasons.next();
-    expect(returnedSeason).toBe('summer');
+    expect(returnedSeason).toEqual('summer');
   });
   test('[14] the 40th call of seasons.next returns "spring"', () => {
     const seasonCalled = (num) => {
@@ -113,7 +113,7 @@ describe('[Exercise 5] Seasons', () => {
     };
     seasonCalled(39);
     const returnedSeason = seasons.next();
-    expect(returnedSeason).toBe('summer');
+    expect(returnedSeason).toEqual('summer');
   });
 });
 
@@ -123,24 +123,34 @@ describe('[Exercise 6] Car', () => {
     focus = new utils.Car('focus', 20, 30); // each test must start with a fresh car
   });
   test('[15] driving the car returns the updated odometer', () => {
-    expect(focus.drive(10)).toBe(10);
-    expect(focus.drive(6)).toBe(16);
-    expect(focus.drive(4)).toBe(20);
+    expect(focus.drive(10)).toEqual(10);
+    expect(focus.drive(6)).toEqual(16);
+    expect(focus.drive(3)).toEqual(19);
   });
-  test('[16] driving the car uses gas', () => {});
-  //   // test('[17] refueling allows to keep driving', () => {})
-  //   // test('[18] adding fuel to a full tank has no effect', () => {})
+  test('[16] driving the car uses gas', () => {
+    expect(focus.drive(30)).toEqual(30);
+    expect(focus.tank).toBe(19);
+  });
+  test('[17] refueling allows to keep driving', () => {
+    expect(focus.drive(600)).toEqual(600);
+    expect(focus.drive(50)).toEqual(600);
+    expect(focus.refuel(10)).toEqual(300);
+    expect(focus.drive(50)).toEqual(650);
+  });
+  test('[18] adding fuel to a full tank has no effect', () => {
+    expect(focus.refuel(10)).toEqual(600);
+  });
 });
 
 describe('[Exercise 7] isEvenNumberAsync', () => {
   test('[19] resolves true if passed an even number', async () => {
-    expect(await utils.isEvenNumberAsync(8)).toBe(true);
-    expect(await utils.isEvenNumberAsync(18)).toBe(true);
-    expect(await utils.isEvenNumberAsync(888)).toBe(true);
+    expect(await utils.isEvenNumberAsync(8)).toEqual(true);
+    expect(await utils.isEvenNumberAsync(18)).toEqual(true);
+    expect(await utils.isEvenNumberAsync(888)).toEqual(true);
   });
   test('[20] resolves false if passed an odd number', async () => {
-    expect(await utils.isEvenNumberAsync(7)).toBe(false);
-    expect(await utils.isEvenNumberAsync(333)).toBe(false);
-    expect(await utils.isEvenNumberAsync(1234567)).toBe(false);
+    expect(await utils.isEvenNumberAsync(7)).toEqual(false);
+    expect(await utils.isEvenNumberAsync(333)).toEqual(false);
+    expect(await utils.isEvenNumberAsync(1234567)).toEqual(false);
   });
 });
